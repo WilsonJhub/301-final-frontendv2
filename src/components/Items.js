@@ -1,7 +1,9 @@
 import { Component } from 'react';
 
 import Button from 'react-bootstrap/Button';
-import Table from 'react-bootstrap/Table';
+//removed Table
+
+import { Accordion } from 'react-bootstrap';
 
 class Items extends Component {
 
@@ -10,29 +12,23 @@ class Items extends Component {
     return (
       <section>
         <h2>Items...</h2>
+          <Accordion>
 
-        <Table striped bordered hover>
-          <thead>
-            <tr>
-              <th>Name</th>
-              <th>Description</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody>
+
+        
             {
               this.props.itemsList.map((item, idx) =>
-                <Item 
-                key={item._id} 
-                itemData={item}
-                deleteItem={this.props.deleteItem} 
-                />
+              <Item 
+              key={item._id} 
+              itemData={item}
+              deleteItem={this.props.deleteItem} 
+              />
               )
             }
-          </tbody>
-        </Table>
+         
 
 
+          </Accordion>
       </section>
     );
   }
@@ -45,21 +41,22 @@ class Item extends Component {
     const itemData = this.props.itemData;
 
     return (
-      <tr>
-        <td>{itemData.name}</td>
-        <td>{itemData.description}</td>
-        <td>
+      <Accordion.Item eventKey='0'>
+
+        <Accordion.Header>{itemData.name}</Accordion.Header>
+        <Accordion.Body>{itemData.description}</Accordion.Body>
+        <Accordion.Body>
           <Button 
           data-testid={`delete-button-${itemData.name}`}
           onClick={() => this.props.deleteItem(itemData._id)}
           >Delete Item</Button>
           <Button 
           onClick={() => this.props.deleteItem(itemData._id)}
-          >
-            Delete me papi
-          </Button>
-        </td>
-      </tr>
+          />
+        </Accordion.Body>
+      </Accordion.Item>
+           
+      
     );
   }
 }
